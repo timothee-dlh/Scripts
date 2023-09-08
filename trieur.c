@@ -41,21 +41,23 @@ int main(int argc, char* argv[]){
             filename = pDirent->d_name;
             
             while (*filename != '\0' && iter.iterChar < iter.MAX_CHAR){
-                        removePointDir(filename);
+                        if(strcmp(filename, ".") != 0 && strcmp(filename, "..") != 0){
 						(void)printf("%c", *filename);
                        
-                        if(*filename == '.'){
-                       
-                              (void)printf("point detected\n");
-                              filename ++; 
+							if(*filename == '.'){
+						
+								(void)printf("point detected\n");
+								filename ++; 
 							
-                              for (int i = 0; *filename != '\0' || *filename == ' '; i ++){
+								for (int i = 0; *filename != '\0' || *filename == ' '; i ++){
                                    extension[i] = *filename;
                                    (void)printf("%c", extension[i]);
                                    filename ++;
                                }              
-                        } 
-                 
+							} 
+						}else{
+							goto nextFile;
+						}
                   // Extension stored in  char extension [10];
                   pIter->iterChar ++; filename ++;
 				
@@ -75,11 +77,4 @@ nextFile:     // goto if not a file
       }
       
 	  return 0;
-}
-
-void removePointDir(char *filename){
-	if(strcmp(filename, ".") == 0 && strcmp(filename, "..") == 0){
-		goto nextFile;
-	}
-
 }
